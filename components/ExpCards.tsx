@@ -118,7 +118,7 @@ export default function ExpCard() {
       </>
       <div className="lg:px-12 mt-12">
         <a
-          href="https://drive.google.com/file/d/1fRkZYl0HbKPmMMceFGlqzqthWhV_HPEu/view?usp=sharing"
+          href="https://drive.google.com/file/d/1c7gd3dTJdZvTQQr6p19iFrYq3K3QOBMM/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center font-medium leading-tight text-foreground group"

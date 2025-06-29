@@ -51,7 +51,7 @@ const jobProjects = [
       "Vercel",
       "Figma",
     ],
-    link: "https://github.com/shivendrakc/MyCIHE_Sem6.git",
+    link: "https://cihelearn2drive.vercel.app/",
   },
   {
     imagePath: "/pro4.png",
