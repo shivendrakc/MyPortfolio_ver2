@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import {
   Card,
@@ -9,67 +8,62 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MoveUpRight } from "lucide-react";
+import { supabase, type Project } from "@/lib/supabase";
 
-const jobProjects = [
+const fallbackProjects: Omit<Project, "id" | "order_index" | "created_at">[] = [
   {
-    imagePath: "/pro1.png",
+    image_path: "/pro1.png",
     title: "Ecommerce Landing Page",
     description:
-      "Developing a landing page as a project to test my react and tailwind skills by dedeisgning",
-    skills: [
-      "Product Design",
-      "UI/UX Design",
-      "Tailwind | React",
-      "Design Strategy",
-      
-    ],
+      "Developing a landing page as a project to test my React and Tailwind skills by redesigning a modern e-commerce layout.",
+    skills: ["Product Design", "UI/UX Design", "Tailwind | React", "Design Strategy"],
     link: "https://react-tailwind-projects-five.vercel.app/",
   },
   {
-    imagePath: "/pro2.png",
-    title: "Make up Portfolio landing Page",
+    image_path: "/pro2.png",
+    title: "Make up Portfolio Landing Page",
     description:
-      "Practicing my Skills by creating real life portfolio landing page who is a make up artist by correclty meeting her design requirement and boosting the SEO",
-    skills: [
-      "UI/UX Design",
-      "Design System",
-      "SEO",
-      "Vercel",
-    ],
+      "Practicing my skills by creating a real-life portfolio landing page for a makeup artist, correctly meeting her design requirements and boosting SEO.",
+    skills: ["UI/UX Design", "Design System", "SEO", "Vercel"],
     link: "https://v0-makeup-artist-portfolio-nu.vercel.app/",
   },
   {
-    imagePath: "/pro3.png",
+    image_path: "/pro3.png",
     title: "Learn2Drive",
     description:
-      "A web application that allows users to learn and practice driving skills. It provides a platform for users to book driving lessons, track their progress, and get feedback on their driving skills. This app is still in development and will be launched soon",
-    skills: [
-      "MERN Stack",
-      "React",
-      "Express",
-      "JavaScript",
-      "Vercel",
-      "Figma",
-    ],
+      "A full-stack MERN capstone application with secure JWT-based authentication and role-based access (student, instructor, admin). Built responsive UI with React and Tailwind, designed and integrated RESTful APIs with Node.js and Express connected to MongoDB, and implemented multi-step forms, dashboard workflows, and user data management.",
+    skills: ["MERN Stack", "JWT Auth", "React", "Express", "MongoDB", "Vercel", "Figma"],
     link: "https://cihelearn2drive.vercel.app/",
   },
   {
-    imagePath: "/pro4.png",
+    image_path: "/pro4.png",
     title: "Weather Forecast Application",
     description:
-      "This is my weather forecast application which is a simple and easy to use application that allows users to check the weather of a particular city. i developed this as one of my college projects demonstrating exceptional java skills and ability to work with andriod studio",
-    skills: [
-     "Java",
-      "Andriod Studio",
-      "XML",
-      "Mobile Development",
-    ],
+      "A simple, easy-to-use weather forecast app that allows users to check the weather of a particular city. Developed as a college project demonstrating Java skills and the ability to work with Android Studio.",
+    skills: ["Java", "Android Studio", "XML", "Mobile Development"],
     link: "https://github.com/shivendrakc/WeatherApp.git",
   },
-  
 ];
 
-export default function Projects() {
+async function getProjects(): Promise<(typeof fallbackProjects[0] & { id?: string })[]> {
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .order("order_index", { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      return fallbackProjects;
+    }
+    return data;
+  } catch {
+    return fallbackProjects;
+  }
+}
+
+export default async function Projects() {
+  const projects = await getProjects();
+
   return (
     <section id="projects" className="scroll-mt-16 lg:mt-16">
       <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/0 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
@@ -77,10 +71,16 @@ export default function Projects() {
           Projects
         </h2>
       </div>
+      <div className="hidden lg:block mb-6">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
+          Projects
+        </h2>
+        <div className="h-px w-12 bg-primary rounded-full" />
+      </div>
       <>
-        {jobProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <a
-            key={index}
+            key={project.id ?? index}
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -88,14 +88,17 @@ export default function Projects() {
           >
             <Card className="group lg:p-6 mb-4 flex flex-col lg:flex-row w-full min-h-fit gap-0 lg:gap-5 border-transparent hover:border dark:lg:hover:border-t-blue-900 dark:lg:hover:bg-slate-800/50 lg:hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:hover:drop-shadow-lg lg:hover:bg-slate-100/50 lg:hover:border-t-blue-200">
               <CardHeader className="h-full w-full lg:w-1/3 mb-4 p-0">
-                <Image
-                  src={project.imagePath}
-                  alt={`Screenshot of ${project.title}`}
-                  width={1920}
-                  height={1080}
-                  priority
-                  className="bg-[#141414] mt-2 border border-muted-foreground rounded-[0.5rem]"
-                />
+                <div className="relative mt-2 overflow-hidden rounded-[0.5rem]">
+                  <Image
+                    src={project.image_path}
+                    alt={`Screenshot of ${project.title}`}
+                    width={1920}
+                    height={1080}
+                    priority={index < 2}
+                    className="bg-[#141414] border border-muted-foreground rounded-[0.5rem] transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute inset-0 rounded-[0.5rem] bg-primary/0 group-hover:bg-primary/20 transition-all duration-300 pointer-events-none" />
+                </div>
               </CardHeader>
               <CardContent className="flex flex-col p-0 w-full lg:w-2/3">
                 <p className="text-primary font-bold">
@@ -106,8 +109,8 @@ export default function Projects() {
                   {project.description}
                 </CardDescription>
                 <CardFooter className="p-0 flex flex-wrap gap-2">
-                  {project.skills.map((skill, index) => (
-                    <Badge key={index}>{skill}</Badge>
+                  {project.skills.map((skill, i) => (
+                    <Badge key={i}>{skill}</Badge>
                   ))}
                 </CardFooter>
               </CardContent>

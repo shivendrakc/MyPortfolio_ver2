@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Github, Linkedin } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Github, Linkedin, MoveUpRight } from "lucide-react";
 import { ModeToggle } from "./ui/toggle-mode";
 import useActiveSection from "@/hooks/useActiveSection";
 
@@ -13,6 +14,7 @@ type NavItem = {
 export default function Nav() {
   const activeSection = useActiveSection([
     "about",
+    "skills",
     "experience",
     "projects",
     "contact",
@@ -20,6 +22,7 @@ export default function Nav() {
 
   const navItems: NavItem[] = [
     { name: "About", href: "#about" },
+    { name: "Skills", href: "#skills" },
     { name: "Experience", href: "#experience" },
     { name: "Projects", href: "#projects" },
     { name: "Contact", href: "#contact" },
@@ -46,23 +49,37 @@ export default function Nav() {
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24 flex flex-col lg:gap-4">
       <div className="flex flex-col gap-4 lg:pr-24 mt-6 lg:mt-0">
         <div className="w-full flex lg:items-center lg:justify-start">
-          {/* <Avatar className="w-24 lg:w-36 h-auto border-2 border-primary bg-secondary">
-            <AvatarImage src="./avatar.png" />
-            <AvatarFallback className="w-24 h-24 lg:w-36 lg:h-36 rounded-full border-1 border-primary">
-              AM
+          <Avatar className="w-20 h-20 lg:w-28 lg:h-28 ring-2 ring-primary ring-offset-2 ring-offset-background">
+            <AvatarImage src="/avatar.png" alt="Shivendra KC" />
+            <AvatarFallback className="text-lg font-bold bg-secondary text-secondary-foreground">
+              SK
             </AvatarFallback>
-          </Avatar> */}
+          </Avatar>
         </div>
         <h1 className="text-[32px] font-bold lg:text-start">
           Hi,<br /> I&#39;m Shivendra K C 👋
         </h1>
-        <h2 className="lg:text-l lg:text-start">
-          Designer | Developer | Analyst | Problem Solver | Automation Enthusiast
-        </h2>
+        <div className="flex flex-wrap gap-2">
+          {["Full-Stack Developer", "IT Graduate", "Problem Solver", "Automation Enthusiast"].map(
+            (role) => (
+              <Badge key={role} variant="secondary" className="text-xs font-medium">
+                {role}
+              </Badge>
+            )
+          )}
+        </div>
         <h5 className="lg:text-sm lg:text-start text-gray-400">
-         I am a emerging developer with passion for creating and building, Currently working on my skills and building projects.
+          Junior Software Developer and IT graduate (2025), building full-stack apps with MERN, Next.js, and a passion for clean, purposeful code.
         </h5>
-        
+        <a
+          href="https://drive.google.com/file/d/1fRkZYl0HbKPmMMceFGlqzqthWhV_HPEu/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4 transition-all mt-1 w-fit"
+        >
+          View Resume
+          <MoveUpRight className="h-3.5 w-3.5" />
+        </a>
       </div>
       <nav className="lg:flex hidden">
         <ul className="flex flex-col w-max text-start gap-6 uppercase text-xs font-medium">
@@ -82,20 +99,22 @@ export default function Nav() {
         </ul>
       </nav>
       <ul className="flex flex-row gap-6 mt-6 lg:mt-0">
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" asChild>
           <a
             href="https://github.com/shivendrakc"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub"
           >
             <Github className="h-[1.2rem] w-[1.2rem]" />
           </a>
         </Button>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" asChild>
           <a
             href="https://www.linkedin.com/in/shivendrakc/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
           >
             <Linkedin className="h-[1.2rem] w-[1.2rem]" />
           </a>

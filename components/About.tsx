@@ -9,21 +9,27 @@ export default function About() {
           About
         </h2>
       </div>
+      <div className="hidden lg:block mb-6">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
+          About
+        </h2>
+        <div className="h-px w-12 bg-primary rounded-full" />
+      </div>
       <div className="flex flex-col gap-4">
-      <p className="text-start text-muted-foreground lg:px-6 ">
-          From frontend development to backend architecture, my journey into tech has always been shaped by a belief in one core idea:{" "}
-          <span className="text-white">
-            technology should be approachable, useful, and human-centered.
-          </span>{" "}
-          My foundation in IT, combined with hands-on experience in sales and consulting, allows me to build not just products, but experiences that connect with real people.
+        <p className="text-start text-muted-foreground lg:px-6 animate-fade-in-up">
+          Junior Software Developer and IT graduate (2025) with a strong passion for software development and emerging technologies.{" "}
+          <span className="text-foreground font-semibold">
+            Experienced in building full-stack web applications using React, Node.js, Express, and MongoDB
+          </span>
+          , including authentication systems and role-based access control. Committed to writing clean, maintainable code and continuously expanding technical expertise.
         </p>
-        <p className="text-start text-muted-foreground lg:px-6">
-          I'm currently completing my degree in Information Technology, while working on automation-driven web apps and full-stack solutions that explore the intersection of user behavior, business needs, and modern technologies like AI. With every project, I strive to simplify the complex—whether it's onboarding users, designing flows, or solving logic with clean, scalable code.
+        <p className="text-start text-muted-foreground lg:px-6 animate-fade-in-up animate-delay-100">
+          I combine practical web development experience with foundational IT support and troubleshooting skills. My capstone project,{" "}
+          <span className="text-foreground font-semibold">Learn2Drive</span>, is a full MERN stack application featuring JWT-based authentication, multi-role dashboards, and RESTful APIs — reflecting my ability to architect and ship production-ready systems. I&#39;m passionate about automation, AI integration, and building tools that genuinely solve problems.
         </p>
-        <p className="text-start text-muted-foreground lg:px-6">
-          My background in customer-facing roles has taught me how to listen, persuade, and deliver value—skills I bring into development through intuitive UI, meaningful features, and attention to detail. I’m deeply passionate about building tools that empower users and make technology feel like a natural extension of their needs and goals.
+        <p className="text-start text-muted-foreground lg:px-6 animate-fade-in-up animate-delay-200">
+          My background in customer-facing and administrative roles has sharpened my ability to listen, communicate clearly, and deliver under pressure — skills I bring directly into development through intuitive UI design, meaningful features, and a sharp eye for user experience. I thrive in collaborative environments and aim to contribute from day one.
         </p>
-
       </div>
     </section>
   );

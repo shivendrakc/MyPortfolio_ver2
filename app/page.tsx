@@ -4,11 +4,13 @@ import Nav from "@/components/Nav";
 import ExpCard from "@/components/ExpCards";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
+import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useEffect, useRef } from "react";
 import { Inter } from "next/font/google";
 import MouseAura from "@/components/ui/MouseAura";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,8 +47,11 @@ export default function Home() {
           <Nav />
           <main className="flex flex-col pt-6 lg:pt-24 lg:w-1/2 lg:py-24 gap-8">
             <About />
+            <Skills />
             <ExpCard />
-            <Projects />
+            <Suspense fallback={<div className="text-muted-foreground text-sm">Loading projects...</div>}>
+              <Projects />
+            </Suspense>
             <Contact />
             <Footer />
           </main>

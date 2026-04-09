@@ -49,81 +49,73 @@ export default function Contact() {
         </h2>
       </div>
       <div className="flex flex-col gap-4 lg:px-6 mb-8">
-        <h2 className="lg:block hidden text-5xl font-bold lg:text-start">
+        <h2 className="text-3xl lg:text-5xl font-bold lg:text-start">
           Get In Touch
         </h2>
         <p className="lg:text-lg lg:text-start text-muted-foreground">
-          If you like my work I am open to further explore my opportunities and develop my skills. Do Send me an email to discuss more.
+          If you like my work, I&#39;m open to exploring opportunities and developing my skills. Send me a message to discuss more.
         </p>
-      </div>
-      <div className="flex flex-row justify-center items-center gap-4 lg:px-6 mb-4">
-        <button
-          onClick={() => setOpen(true)}
-          className="hover:cursor-pointer w-full"
-        >
-          <Button variant={"default"} className="w-full h-full">
-            <div className="flex flex-row items-center">
-              <Mail className="dark:text-white text-muted h-6 w-6" />
-              <p className="ml-3 text-2xl dark:text-white text-muted">
-                Say hello
-              </p>
-            </div>
-          </Button>
-        </button>
-      </div>
-      {/* Modal */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md relative">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={() => setOpen(false)}
-              aria-label="Close"
-            >
-              ×
-            </button>
-            <h3 className="text-2xl font-bold mb-4">Contact Me</h3>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="border rounded px-3 py-2 dark:bg-gray-800 dark:text-white"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="border rounded px-3 py-2 dark:bg-gray-800 dark:text-white"
-              />
-              <textarea
-                name="message"
-                placeholder="Your Message"
-                value={form.message}
-                onChange={handleChange}
-                required
-                className="border rounded px-3 py-2 dark:bg-gray-800 dark:text-white"
-                rows={4}
-              />
-              <Button type="submit" variant="default" className="w-full" disabled={loading}>
-                {loading ? "Sending..." : "Send"}
+        {!open ? (
+          <button
+            onClick={() => setOpen(true)}
+            className="inline-flex items-center gap-2 w-fit px-6 py-3 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+          >
+            <Mail className="h-4 w-4" />
+            Say hello
+          </button>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-3 w-full max-w-md animate-fade-in-up"
+          >
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              className="border border-input rounded-md px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="border border-input rounded-md px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm"
+            />
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              value={form.message}
+              onChange={handleChange}
+              required
+              rows={4}
+              className="border border-input rounded-md px-3 py-2 bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring text-sm resize-none"
+            />
+            <div className="flex gap-2">
+              <Button type="submit" variant="default" disabled={loading} className="flex-1">
+                {loading ? "Sending..." : "Send Message"}
               </Button>
-              {status === "success" && (
-                <p className="text-green-600">Message sent! Thank you.</p>
-              )}
-              {status === "error" && (
-                <p className="text-red-600">Something went wrong. Please try again.</p>
-              )}
-            </form>
-          </div>
-        </div>
-      )}
+              <button
+                type="button"
+                onClick={() => { setOpen(false); setStatus(""); }}
+                className="px-4 py-2 rounded-md border border-input text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+            {status === "success" && (
+              <p className="text-sm text-green-600 dark:text-green-400">Message sent! Thank you.</p>
+            )}
+            {status === "error" && (
+              <p className="text-sm text-red-600 dark:text-red-400">Something went wrong. Please try again.</p>
+            )}
+          </form>
+        )}
+      </div>
     </section>
   );
 }

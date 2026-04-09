@@ -12,68 +12,62 @@ import { MoveRight } from "lucide-react";
 
 const jobPositions = [
   {
-    timeline: "2022 Sep - Present",
-    currentPosition: "Senior Sales Consultant",
-    place: "Koala Living",
-    previousPositions: [""],
+    timeline: "June 2025 – Present",
+    currentPosition: "Sales Consultant",
+    place: "Lounge Lovers",
     description:
-      "Led the customer consultation experience at Koala Living as a Senior Sales Consultant, curating personalized furniture solutions room by room. I set high standards for visual merchandising, managed ERP operations including stock and fulfillment, and handled escalations to ensure premium post-sales support. Drove consistent KPI performance while enhancing the brand’s customer engagement approach.",
+      "Delivered personalized customer service in a premium furniture retail environment, accurately processing transactions and managing high-value customer orders. Guided customers through product selections, handled escalations professionally, and consistently met sales targets through strong relationship-building and product knowledge.",
     skills: [
-      "Client Consulting",
-      "ERP Management",
-      "Sales Optimization",
-      "Conflict Resolution",
-      "Visual Merchandising",
-    ],
-  },
-  {
-    timeline: "Oct 2024 – Mar 2025",
-    currentPosition: "IT Administrator",
-    place: "Dynamic Training Services",
-    previousPositions: [""],
-    description:
-      "IT Administrator at a higher education provider, responsible for maintaining campus-wide systems and ensuring operational uptime. Delivered front-line technical support for students and staff, managed user accounts and permissions, resolved hardware, software, and network issues, and ensured compliance with IT policies to support secure, uninterrupted digital learning environments.",
-    skills: [
-      "System Maintenance",
-      "Network Troubleshooting",
-      "Technical Support",
-      "User Management",
-      "Security Monitoring"
+      "Customer Service",
+      "Sales",
+      "Order Management",
+      "CRM",
+      "Stakeholder Communication",
     ],
   },
   {
     timeline: "May 2023 – Present",
-    currentPosition: "Online Supervisor",
+    currentPosition: "Online Team Supervisor",
     place: "Woolworths",
-    previousPositions: [""],
     description:
-      "Online Team Supervisor at Woolworths, managing end-to-end online order processing in a fast-paced retail setting. Led a team to meet fulfillment KPIs, resolved inventory discrepancies, handled customer escalations, ensured timely dispatch of orders, and coordinated with internal departments to maintain accuracy and service quality under pressure.",
+      "Supervised online order processing in a fast-paced retail environment, ensuring accurate picking, packing, and on-time delivery. Led and supported team members on shift, assigned tasks, resolved customer escalations promptly, and monitored daily operations to introduce efficiency improvements across stock flow and service priorities.",
     skills: [
-    "Team Coordination",
-      "Inventory Management",
-      "Customer Service",
+      "Team Leadership",
       "Order Fulfillment",
-      "Problem Solving",
+      "Customer Service",
+      "Inventory Management",
+      "Process Improvement",
+    ],
+  },
+  {
+    timeline: "Oct 2024 – Mar 2025",
+    currentPosition: "Administrative Support",
+    place: "Dynamic Training Services",
+    description:
+      "Provided administrative support at a higher education provider through accurate data entry, document preparation, and record management. Delivered basic IT assistance including workstation setup and software troubleshooting, maintained internal databases, coordinated digital files, and supported daily operational continuity across training units.",
+    skills: [
+      "Data Entry",
+      "Record Management",
+      "IT Support",
+      "Microsoft Office",
+      "Database Maintenance",
     ],
   },
   {
     timeline: "Jan 2022 – July 2022",
     currentPosition: "Junior Web Developer",
     place: "Leapfrog | Kathmandu, Nepal",
-    previousPositions: [
-      ""
-    ],
     description:
-      "Junior Web Developer at Leapfrog, contributing to full-stack development tasks. Worked on UI enhancements using React, HTML, and CSS, assisted in backend logic with JavaScript, participated in agile sprints, implemented API integrations, fixed bugs, and gained practical experience in Git workflows, responsive design, and team-based development practices.",
+      "Contributed to full-stack development tasks at a software agency in Nepal. Worked on UI enhancements using React, HTML, and CSS, assisted in backend logic with JavaScript, implemented API integrations, participated in agile sprints, fixed bugs, and gained practical experience in Git workflows, responsive design, and team-based development practices.",
     skills: [
-      "Frontend Development",
-      "React Components",
+      "React",
+      "JavaScript",
       "API Integration",
-      "Version Control",
-      "Debugging Skills"
+      "Git & GitHub",
+      "Responsive Design",
+      "Agile",
     ],
   },
-  
 ];
 
 export default function ExpCard() {
@@ -84,11 +78,17 @@ export default function ExpCard() {
           Experience
         </h2>
       </div>
+      <div className="hidden lg:block mb-6">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
+          Experience
+        </h2>
+        <div className="h-px w-12 bg-primary rounded-full" />
+      </div>
       <>
         {jobPositions.map((job, index) => (
           <Card
             key={index}
-            className="lg:p-6 mb-4 flex flex-col lg:flex-row w-full min-h-fit gap-0 lg:gap-5 border-transparent hover:border dark:lg:hover:border-t-blue-900 dark:lg:hover:bg-slate-800/50 lg:hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:hover:drop-shadow-lg lg:hover:bg-slate-100/50 lg:hover:border-t-blue-200"
+            className="lg:p-6 mb-4 flex flex-col lg:flex-row w-full min-h-fit gap-0 lg:gap-5 border-transparent border-l-2 border-l-transparent hover:border-l-primary hover:border dark:lg:hover:border-t-blue-900 dark:lg:hover:bg-slate-800/50 lg:hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:hover:drop-shadow-lg lg:hover:bg-slate-100/50 lg:hover:border-t-blue-200 transition-all duration-200"
           >
             <CardHeader className="h-full w-full p-0">
               <CardTitle className="text-base text-slate-400 whitespace-nowrap">
@@ -99,11 +99,6 @@ export default function ExpCard() {
               <p className="text-foreground font-bold">
                 {job.currentPosition} • {job.place}
               </p>
-              {job.previousPositions.map((position, index) => (
-                <p key={index} className="text-slate-400 text-sm font-bold">
-                  {position}
-                </p>
-              ))}
               <CardDescription className="py-3 text-muted-foreground">
                 {job.description}
               </CardDescription>

@@ -19,5 +19,6 @@ Thumbs.db
 
 # Env variables
 .env
+.env.local
 *.log
 .DS_Store
