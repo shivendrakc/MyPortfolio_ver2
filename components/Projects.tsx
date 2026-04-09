@@ -1,3 +1,5 @@
+"use client";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   Card,
@@ -8,9 +10,18 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MoveUpRight } from "lucide-react";
-import { supabase, type Project } from "@/lib/supabase";
 
-const fallbackProjects: Omit<Project, "id" | "order_index" | "created_at">[] = [
+type Project = {
+  id?: string;
+  image_path: string;
+  title: string;
+  description: string;
+  skills: string[];
+  link: string;
+  order_index?: number;
+};
+
+const fallbackProjects: Project[] = [
   {
     image_path: "/pro1.png",
     title: "Ecommerce Landing Page",
@@ -31,7 +42,7 @@ const fallbackProjects: Omit<Project, "id" | "order_index" | "created_at">[] = [
     image_path: "/pro3.png",
     title: "Learn2Drive",
     description:
-      "A full-stack MERN capstone application with secure JWT-based authentication and role-based access (student, instructor, admin). Built responsive UI with React and Tailwind, designed and integrated RESTful APIs with Node.js and Express connected to MongoDB, and implemented multi-step forms, dashboard workflows, and user data management.",
+      "A full-stack MERN capstone application with secure JWT-based authentication and role-based access (student, instructor, admin). Built responsive UI with React and Tailwind, designed RESTful APIs with Node.js and Express connected to MongoDB, and implemented multi-step forms, dashboard workflows, and user data management.",
     skills: ["MERN Stack", "JWT Auth", "React", "Express", "MongoDB", "Vercel", "Figma"],
     link: "https://cihelearn2drive.vercel.app/",
   },
@@ -45,24 +56,21 @@ const fallbackProjects: Omit<Project, "id" | "order_index" | "created_at">[] = [
   },
 ];
 
-async function getProjects(): Promise<(typeof fallbackProjects[0] & { id?: string })[]> {
-  try {
-    const { data, error } = await supabase
-      .from("projects")
-      .select("*")
-      .order("order_index", { ascending: true });
+export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
 
-    if (error || !data || data.length === 0) {
-      return fallbackProjects;
-    }
-    return data;
-  } catch {
-    return fallbackProjects;
-  }
-}
-
-export default async function Projects() {
-  const projects = await getProjects();
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProjects(data);
+        }
+      })
+      .catch(() => {
+        // Keep fallback projects if API is unavailable
+      });
+  }, []);
 
   return (
     <section id="projects" className="scroll-mt-16 lg:mt-16">

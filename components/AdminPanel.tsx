@@ -1,7 +1,38 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Pencil, Trash2, ChevronUp, ChevronDown, Plus, LogOut, X, Check } from "lucide-react";
+import { Pencil, Trash2, ChevronUp, ChevronDown, Plus, LogOut, X, Check, Download } from "lucide-react";
+
+const DEFAULT_PROJECTS = [
+  {
+    title: "Ecommerce Landing Page",
+    description: "Developing a landing page as a project to test my React and Tailwind skills by redesigning a modern e-commerce layout.",
+    skills: ["Product Design", "UI/UX Design", "Tailwind | React", "Design Strategy"],
+    link: "https://react-tailwind-projects-five.vercel.app/",
+    image_path: "/pro1.png",
+  },
+  {
+    title: "Make up Portfolio Landing Page",
+    description: "Practicing my skills by creating a real-life portfolio landing page for a makeup artist, correctly meeting her design requirements and boosting SEO.",
+    skills: ["UI/UX Design", "Design System", "SEO", "Vercel"],
+    link: "https://v0-makeup-artist-portfolio-nu.vercel.app/",
+    image_path: "/pro2.png",
+  },
+  {
+    title: "Learn2Drive",
+    description: "A full-stack MERN capstone application with secure JWT-based authentication and role-based access (student, instructor, admin). Built responsive UI with React and Tailwind, designed RESTful APIs with Node.js and Express connected to MongoDB, and implemented multi-step forms, dashboard workflows, and user data management.",
+    skills: ["MERN Stack", "JWT Auth", "React", "Express", "MongoDB", "Vercel", "Figma"],
+    link: "https://cihelearn2drive.vercel.app/",
+    image_path: "/pro3.png",
+  },
+  {
+    title: "Weather Forecast Application",
+    description: "A simple, easy-to-use weather forecast app that allows users to check the weather of a particular city. Developed as a college project demonstrating Java skills and the ability to work with Android Studio.",
+    skills: ["Java", "Android Studio", "XML", "Mobile Development"],
+    link: "https://github.com/shivendrakc/WeatherApp.git",
+    image_path: "/pro4.png",
+  },
+];
 
 type Project = {
   id: string;
@@ -29,13 +60,19 @@ export default function AdminPanel() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [seeding, setSeeding] = useState(false);
   const [error, setError] = useState("");
 
   async function fetchProjects() {
-    const res = await fetch("/api/projects");
-    const data = await res.json();
-    setProjects(data);
-    setLoading(false);
+    try {
+      const res = await fetch("/api/projects");
+      const data = await res.json();
+      setProjects(Array.isArray(data) ? data : []);
+    } catch {
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -123,6 +160,20 @@ export default function AdminPanel() {
     });
   }
 
+  async function handleSeedDefaults() {
+    if (!confirm("This will import your 4 existing portfolio projects into Supabase. Continue?")) return;
+    setSeeding(true);
+    for (const project of DEFAULT_PROJECTS) {
+      await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(project),
+      });
+    }
+    await fetchProjects();
+    setSeeding(false);
+  }
+
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     router.push("/admin/login");
@@ -158,15 +209,27 @@ export default function AdminPanel() {
       </div>
 
       <div className="max-w-3xl mx-auto px-6 py-8">
-        {/* Add Project Button */}
+        {/* Toolbar */}
         {!showForm && (
-          <button
-            onClick={startAdd}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors mb-6"
-          >
-            <Plus className="h-4 w-4" />
-            Add Project
-          </button>
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <button
+              onClick={startAdd}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <Plus className="h-4 w-4" />
+              Add Project
+            </button>
+            {projects.length === 0 && (
+              <button
+                onClick={handleSeedDefaults}
+                disabled={seeding}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-border text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors disabled:opacity-50"
+              >
+                <Download className="h-4 w-4" />
+                {seeding ? "Importing..." : "Import existing projects"}
+              </button>
+            )}
+          </div>
         )}
 
         {/* Add / Edit Form */}

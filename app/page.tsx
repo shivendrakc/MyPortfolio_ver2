@@ -10,8 +10,6 @@ import Footer from "@/components/Footer";
 import { useEffect, useRef } from "react";
 import { Inter } from "next/font/google";
 import MouseAura from "@/components/ui/MouseAura";
-import { Suspense } from "react";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -49,9 +47,7 @@ export default function Home() {
             <About />
             <Skills />
             <ExpCard />
-            <Suspense fallback={<div className="text-muted-foreground text-sm">Loading projects...</div>}>
-              <Projects />
-            </Suspense>
+            <Projects />
             <Contact />
             <Footer />
           </main>
