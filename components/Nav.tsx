@@ -72,7 +72,7 @@ export default function Nav() {
           Junior Software Developer and IT graduate (2025), building full-stack apps with MERN, Next.js, and a passion for clean, purposeful code.
         </h5>
         <a
-          href="https://drive.google.com/file/d/1fRkZYl0HbKPmMMceFGlqzqthWhV_HPEu/view?usp=sharing"
+          href="https://drive.google.com/file/d/1lt0nEwhFAS0f-yHH2RN3z_QQCFOBcWHb/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4 transition-all mt-1 w-fit"
